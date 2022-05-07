@@ -106,7 +106,7 @@ namespace v2rayN.Base
                 throw new Exception(string.Format("The request returned with HTTP status code {0}", response.StatusCode));
             }
 
-            var total = response.Content.Headers.ContentLength.HasValue ? response.Content.Headers.ContentLength.Value : -1L;
+            var total = response.Content.Headers.ContentLength ?? -1L;
             var canReportProgress = total != -1 && progress != null;
 
             using (var stream = await response.Content.ReadAsStreamAsync())

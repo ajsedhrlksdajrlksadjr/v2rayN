@@ -196,8 +196,10 @@ namespace v2rayN.Forms
             {
                 return;
             }
-            var fm = new RoutingRuleSettingForm();
-            fm.EditIndex = index;
+            var fm = new RoutingRuleSettingForm
+            {
+                EditIndex = index
+            };
             if (fm.ShowDialog() == DialogResult.OK)
             {
                 RefreshRoutingsView();
@@ -245,8 +247,10 @@ namespace v2rayN.Forms
 
         private void menuAdd_Click(object sender, EventArgs e)
         {
-            var fm = new RoutingRuleSettingForm();
-            fm.EditIndex = -1;
+            var fm = new RoutingRuleSettingForm
+            {
+                EditIndex = -1
+            };
             if (fm.ShowDialog() == DialogResult.OK)
             {
                 RefreshRoutingsView();

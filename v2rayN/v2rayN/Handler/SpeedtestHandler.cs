@@ -12,10 +12,10 @@ namespace v2rayN.Handler
 {
     class SpeedtestHandler
     {
-        private Config _config;
-        private V2rayHandler _v2rayHandler;
-        private List<ServerTestItem> _selecteds;
-        Action<string, string> _updateFunc;
+        private readonly Config _config;
+        private readonly V2rayHandler _v2rayHandler;
+        private readonly List<ServerTestItem> _selecteds;
+        readonly Action<string, string> _updateFunc;
 
         public SpeedtestHandler(Config config)
         {

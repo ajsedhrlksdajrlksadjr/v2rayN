@@ -76,19 +76,19 @@ namespace v2rayN.Forms
 
                 if (item.Control)
                 {
-                    keys += $"{Keys.Control.ToString()} + ";
+                    keys += $"{Keys.Control} + ";
                 }
                 if (item.Alt)
                 {
-                    keys += $"{Keys.Alt.ToString()} + ";
+                    keys += $"{Keys.Alt} + ";
                 }
                 if (item.Shift)
                 {
-                    keys += $"{Keys.Shift.ToString()} + ";
+                    keys += $"{Keys.Shift} + ";
                 }
                 if (item.KeyCode != null)
                 {
-                    keys += $"{item.KeyCode.ToString()}";
+                    keys += $"{item.KeyCode}";
                 }
 
                 panel1.Controls[$"txtGlobalHotkey{k}"].Text = keys;

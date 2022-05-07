@@ -64,57 +64,58 @@ namespace v2rayN.Handler
 
         private void InitCoreInfo()
         {
-            coreInfos = new List<CoreInfo>();
-
-            coreInfos.Add(new CoreInfo
+            coreInfos = new List<CoreInfo>
             {
-                coreType = ECoreType.v2fly,
-                coreExes = new List<string> { "wv2ray", "v2ray" },
-                arguments = "",
-                coreUrl = Global.v2flyCoreUrl,
-                match = "V2Ray"
-            });
+                new CoreInfo
+                {
+                    coreType = ECoreType.v2fly,
+                    coreExes = new List<string> { "wv2ray", "v2ray" },
+                    arguments = "",
+                    coreUrl = Global.v2flyCoreUrl,
+                    match = "V2Ray"
+                },
 
-            coreInfos.Add(new CoreInfo
-            {
-                coreType = ECoreType.Xray,
-                coreExes = new List<string> { "xray" },
-                arguments = "",
-                coreUrl = Global.xrayCoreUrl,
-                match = "Xray"
-            });
+                new CoreInfo
+                {
+                    coreType = ECoreType.Xray,
+                    coreExes = new List<string> { "xray" },
+                    arguments = "",
+                    coreUrl = Global.xrayCoreUrl,
+                    match = "Xray"
+                },
 
-            coreInfos.Add(new CoreInfo
-            {
-                coreType = ECoreType.clash,
-                coreExes = new List<string> { "clash-windows-amd64-v3", "clash-windows-amd64", "clash-windows-386", "clash" },
-                arguments = "-f config.json",
-                coreUrl = Global.clashCoreUrl
-            });
+                new CoreInfo
+                {
+                    coreType = ECoreType.clash,
+                    coreExes = new List<string> { "clash-windows-amd64-v3", "clash-windows-amd64", "clash-windows-386", "clash" },
+                    arguments = "-f config.json",
+                    coreUrl = Global.clashCoreUrl
+                },
 
-            coreInfos.Add(new CoreInfo
-            {
-                coreType = ECoreType.clash_meta,
-                coreExes = new List<string> { "Clash.Meta-windows-amd64v1", "Clash.Meta-windows-amd64", "Clash.Meta-windows-386", "Clash.Meta", "clash" },
-                arguments = "-f config.json",
-                coreUrl = Global.clashMetaCoreUrl
-            });
+                new CoreInfo
+                {
+                    coreType = ECoreType.clash_meta,
+                    coreExes = new List<string> { "Clash.Meta-windows-amd64v1", "Clash.Meta-windows-amd64", "Clash.Meta-windows-386", "Clash.Meta", "clash" },
+                    arguments = "-f config.json",
+                    coreUrl = Global.clashMetaCoreUrl
+                },
 
-            coreInfos.Add(new CoreInfo
-            {
-                coreType = ECoreType.hysteria,
-                coreExes = new List<string> { "hysteria-tun-windows-6.0-amd64", "hysteria-tun-windows-6.0-386", "hysteria" },
-                arguments = "",
-                coreUrl = Global.hysteriaCoreUrl
-            });
+                new CoreInfo
+                {
+                    coreType = ECoreType.hysteria,
+                    coreExes = new List<string> { "hysteria-tun-windows-6.0-amd64", "hysteria-tun-windows-6.0-386", "hysteria" },
+                    arguments = "",
+                    coreUrl = Global.hysteriaCoreUrl
+                },
 
-            coreInfos.Add(new CoreInfo
-            {
-                coreType = ECoreType.naiveproxy,
-                coreExes = new List<string> { "naiveproxy", "naive" },
-                arguments = "config.json",
-                coreUrl = Global.naiveproxyCoreUrl
-            });
+                new CoreInfo
+                {
+                    coreType = ECoreType.naiveproxy,
+                    coreExes = new List<string> { "naiveproxy", "naive" },
+                    arguments = "config.json",
+                    coreUrl = Global.naiveproxyCoreUrl
+                }
+            };
         }
 
     }

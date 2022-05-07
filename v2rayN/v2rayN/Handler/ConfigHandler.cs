@@ -814,7 +814,7 @@ namespace v2rayN.Handler
                 && o.path == n.path
                 && o.streamSecurity == n.streamSecurity
                 && o.flow == n.flow
-                && (remarks ? o.remarks == n.remarks : true);
+                && (!remarks || (o.remarks == n.remarks));
         }
 
         private static int RemoveVmessItem(Config config, int index)

@@ -767,10 +767,11 @@ namespace v2rayN.Handler
                         }
                         break;
                     case "grpc":
-                        var grpcSettings = new GrpcSettings();
-
-                        grpcSettings.serviceName = node.path;
-                        grpcSettings.multiMode = (node.headerType == Global.GrpcmultiMode ? true : false);
+                        var grpcSettings = new GrpcSettings
+                        {
+                            serviceName = node.path,
+                            multiMode = (node.headerType == Global.GrpcmultiMode)
+                        };
                         streamSettings.grpcSettings = grpcSettings;
                         break;
                     default:

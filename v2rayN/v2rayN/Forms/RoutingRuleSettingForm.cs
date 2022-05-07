@@ -126,8 +126,10 @@ namespace v2rayN.Forms
         }
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "PNG|*.png";
+            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            {
+                Filter = "PNG|*.png"
+            };
             openFileDialog1.ShowDialog();
             txtCustomIcon.Text = openFileDialog1.FileName;
 
@@ -140,8 +142,10 @@ namespace v2rayN.Forms
             {
                 return;
             }
-            var fm = new RoutingRuleSettingDetailsForm();
-            fm.rulesItem = routingItem.rules[index];
+            var fm = new RoutingRuleSettingDetailsForm
+            {
+                rulesItem = routingItem.rules[index]
+            };
             if (fm.ShowDialog() == DialogResult.OK)
             {
                 RefreshRoutingsView();
@@ -218,8 +222,10 @@ namespace v2rayN.Forms
 
         private void menuAdd_Click(object sender, EventArgs e)
         {
-            var fm = new RoutingRuleSettingDetailsForm();
-            fm.rulesItem = new RulesItem();
+            var fm = new RoutingRuleSettingDetailsForm
+            {
+                rulesItem = new RulesItem()
+            };
             if (fm.ShowDialog() == DialogResult.OK)
             {
                 routingItem.rules.Insert(0, fm.rulesItem);

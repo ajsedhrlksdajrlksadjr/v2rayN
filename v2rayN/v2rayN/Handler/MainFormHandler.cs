@@ -193,7 +193,7 @@ namespace v2rayN.Handler
 
         public void BackupGuiNConfig(Config config, bool auto = false)
         {
-            string fileName = $"guiNConfig_{DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff")}.json";
+            string fileName = $"guiNConfig_{DateTime.Now:yyyy_MM_dd_HH_mm_ss_fff}.json";
             if (auto)
             {
                 fileName = Utils.GetBackupPath(fileName);
@@ -321,12 +321,12 @@ namespace v2rayN.Handler
                 try
                 {
                     HotkeyManager.Current.AddOrReplace(((int)item.eGlobalHotkey).ToString(), keys, handler);
-                    var msg = string.Format(ResUI.RegisterGlobalHotkeySuccessfully, $"{item.eGlobalHotkey.ToString()} = {keys}");
+                    var msg = string.Format(ResUI.RegisterGlobalHotkeySuccessfully, $"{item.eGlobalHotkey} = {keys}");
                     update(false, msg);
                 }
                 catch (Exception ex)
                 {
-                    var msg = string.Format(ResUI.RegisterGlobalHotkeyFailed, $"{item.eGlobalHotkey.ToString()} = {keys}", ex.Message);
+                    var msg = string.Format(ResUI.RegisterGlobalHotkeyFailed, $"{item.eGlobalHotkey} = {keys}", ex.Message);
                     update(false, msg);
                     Utils.SaveLog(msg);
                 }

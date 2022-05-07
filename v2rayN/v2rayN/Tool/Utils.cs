@@ -509,8 +509,7 @@ namespace v2rayN
 
         public static bool IsIpv6(string ip)
         {
-            IPAddress address;
-            if (IPAddress.TryParse(ip, out address))
+            if (IPAddress.TryParse(ip, out IPAddress address))
             {
                 switch (address.AddressFamily)
                 {
@@ -679,7 +678,7 @@ namespace v2rayN
             {
                 if (ndpKey != null && ndpKey.GetValue("Release") != null)
                 {
-                    return (int)ndpKey.GetValue("Release") >= release ? true : false;
+                    return (int)ndpKey.GetValue("Release") >= release;
                 }
                 return false;
             }

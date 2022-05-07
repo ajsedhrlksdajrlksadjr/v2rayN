@@ -33,7 +33,7 @@ namespace v2rayN.Forms
                     panSs.Dock = DockStyle.Fill;
                     panSs.Visible = true;
                     panTran.Visible = false;
-                    this.Height = this.Height - panTran.Height;
+                    this.Height -= panTran.Height;
 
                     cmbSecurity3.Items.AddRange(LazyConfig.Instance.GetShadowsocksSecuritys().ToArray());
                     break;
@@ -41,7 +41,7 @@ namespace v2rayN.Forms
                     panSocks.Dock = DockStyle.Fill;
                     panSocks.Visible = true;
                     panTran.Visible = false;
-                    this.Height = this.Height - panTran.Height;
+                    this.Height -= panTran.Height;
                     break;
                 case EConfigType.VLESS:
                     panVless.Dock = DockStyle.Fill;
@@ -65,8 +65,10 @@ namespace v2rayN.Forms
             }
             else
             {
-                vmessItem = new VmessItem();
-                vmessItem.groupId = groupId;
+                vmessItem = new VmessItem
+                {
+                    groupId = groupId
+                };
                 ClearServer();
             }
         }

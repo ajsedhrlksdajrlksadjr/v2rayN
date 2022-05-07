@@ -15,17 +15,21 @@ namespace v2rayN.Tool
         {
             Hierarchy hierarchy = (Hierarchy)LogManager.GetRepository();
 
-            PatternLayout patternLayout = new PatternLayout();
-            patternLayout.ConversionPattern = "%date [%thread] %-5level %logger - %message%newline";
+            PatternLayout patternLayout = new PatternLayout
+            {
+                ConversionPattern = "%date [%thread] %-5level %logger - %message%newline"
+            };
             patternLayout.ActivateOptions();
 
-            RollingFileAppender roller = new RollingFileAppender();
-            roller.AppendToFile = true;
-            roller.RollingStyle = RollingFileAppender.RollingMode.Date;
-            roller.DatePattern = "yyyy-MM-dd'.txt'";
-            roller.File = Utils.GetPath(@"guiLogs\");
-            roller.Layout = patternLayout;
-            roller.StaticLogFileName = false;
+            RollingFileAppender roller = new RollingFileAppender
+            {
+                AppendToFile = true,
+                RollingStyle = RollingFileAppender.RollingMode.Date,
+                DatePattern = "yyyy-MM-dd'.txt'",
+                File = Utils.GetPath(@"guiLogs\"),
+                Layout = patternLayout,
+                StaticLogFileName = false
+            };
             roller.ActivateOptions();
             hierarchy.Root.AddAppender(roller);
 

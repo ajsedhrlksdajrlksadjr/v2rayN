@@ -211,7 +211,7 @@ namespace v2rayN.Forms
         private void RefreshServers()
         {
             lstVmess = config.vmess
-                .Where(it => Utils.IsNullOrEmpty(groupId) ? true : it.groupId == groupId)
+                .Where(it => Utils.IsNullOrEmpty(groupId) || (it.groupId == groupId))
                 .OrderBy(it => it.sort)
                 .ToList();
 
@@ -413,7 +413,7 @@ namespace v2rayN.Forms
                 }
 
                 var tag = lvServers.Columns[e.Column].Tag?.ToString();
-                bool asc = Utils.IsNullOrEmpty(tag) ? true : !Convert.ToBoolean(tag);
+                bool asc = Utils.IsNullOrEmpty(tag) || !Convert.ToBoolean(tag);
                 if (ConfigHandler.SortServers(ref config, ref lstVmess, (EServerColName)e.Column, asc) != 0)
                 {
                     return;
@@ -438,14 +438,18 @@ namespace v2rayN.Forms
             tabGroup.TabPages.Clear();
 
             string title = $"  {ResUI.AllGroupServers}   ";
-            var tabPage = new TabPage(title);
-            tabPage.Name = "";
+            var tabPage = new TabPage(title)
+            {
+                Name = ""
+            };
             tabGroup.TabPages.Add(tabPage);
 
             foreach (var item in config.groupItem.OrderBy(t => t.sort))
             {
-                var tabPage2 = new TabPage($"   {item.remarks}   ");
-                tabPage2.Name = item.id;
+                var tabPage2 = new TabPage($"   {item.remarks}   ")
+                {
+                    Name = item.id
+                };
                 tabGroup.TabPages.Add(tabPage2);
             }
 

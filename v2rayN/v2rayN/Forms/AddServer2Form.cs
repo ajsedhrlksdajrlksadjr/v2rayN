@@ -32,8 +32,10 @@ namespace v2rayN.Forms
             }
             else
             {
-                vmessItem = new VmessItem();
-                vmessItem.groupId = groupId;
+                vmessItem = new VmessItem
+                {
+                    groupId = groupId
+                };
                 ClearServer();
             }
         }

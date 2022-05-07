@@ -59,8 +59,6 @@ namespace v2rayN.Handler
 
         private static string ShareVmess(VmessItem item)
         {
-            string url = string.Empty;
-
             VmessQRCode vmessQRCode = new VmessQRCode
             {
                 v = item.configVersion.ToString(),
@@ -79,7 +77,7 @@ namespace v2rayN.Handler
                 alpn = Utils.List2String(item.alpn)
             };
 
-            url = Utils.ToJson(vmessQRCode);
+            string url = Utils.ToJson(vmessQRCode);
             url = Utils.Base64Encode(url);
             url = string.Format("{0}{1}", Global.vmessProtocol, url);
 
@@ -88,8 +86,6 @@ namespace v2rayN.Handler
 
         private static string ShareShadowsocks(VmessItem item)
         {
-            string url = string.Empty;
-
             string remark = string.Empty;
             if (!Utils.IsNullOrEmpty(item.remarks))
             {
@@ -103,14 +99,13 @@ namespace v2rayN.Handler
             //url = Utils.Base64Encode(url);
             //new Sip002
             var pw = Utils.Base64Encode($"{item.security}:{item.id}");
-            url = $"{pw}@{GetIpv6(item.address)}:{ item.port}";
+            string url = $"{pw}@{GetIpv6(item.address)}:{ item.port}";
             url = string.Format("{0}{1}{2}", Global.ssProtocol, url, remark);
             return url;
         }
 
         private static string ShareSocks(VmessItem item)
         {
-            string url = string.Empty;
             string remark = string.Empty;
             if (!Utils.IsNullOrEmpty(item.remarks))
             {
@@ -124,7 +119,7 @@ namespace v2rayN.Handler
             //url = Utils.Base64Encode(url);
             //new
             var pw = Utils.Base64Encode($"{item.security}:{item.id}");
-            url = $"{pw}@{GetIpv6(item.address)}:{ item.port}";
+            string url = $"{pw}@{GetIpv6(item.address)}:{ item.port}";
             url = string.Format("{0}{1}{2}", Global.socksProtocol, url, remark);
             return url;
         }
@@ -407,9 +402,10 @@ namespace v2rayN.Handler
         private static VmessItem ResolveVmess(string result, out string msg)
         {
             msg = string.Empty;
-            VmessItem vmessItem = new VmessItem();
-
-            vmessItem.configType = EConfigType.Vmess;
+            VmessItem vmessItem = new VmessItem
+            {
+                configType = EConfigType.Vmess
+            };
             result = result.Substring(Global.vmessProtocol.Length);
             result = Utils.Base64Decode(result);
 
@@ -655,8 +651,10 @@ namespace v2rayN.Handler
 
         private static VmessItem ResolveSocks(string result)
         {
-            VmessItem vmessItem = new VmessItem();
-            vmessItem.configType = EConfigType.Socks;
+            VmessItem vmessItem = new VmessItem
+            {
+                configType = EConfigType.Socks
+            };
             result = result.Substring(Global.socksProtocol.Length);
             //remark
             int indexRemark = result.IndexOf("#");
