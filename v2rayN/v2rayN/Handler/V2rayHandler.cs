@@ -78,7 +78,7 @@ namespace v2rayN.Handler
             else
             {
                 ShowMsg(false, msg);
-                pid = V2rayStartNew(configStr);
+                pid = V2rayStartNew(configStr, ECoreType.v2fly);
                 //V2rayRestart();
                 // start with -config
             }
@@ -248,13 +248,20 @@ namespace v2rayN.Handler
         /// <summary>
         /// V2ray启动，新建进程，传入配置字符串
         /// </summary>
-        private int V2rayStartNew(string configStr)
+        private int V2rayStartNew(string configStr, ECoreType? coreType = null)
         {
             ShowMsg(false, string.Format(ResUI.StartService, DateTime.Now.ToString()));
 
             try
             {
-                string fileName = V2rayFindexe(new List<string> { "xray" });
+                string fileName = "";
+                if (coreType == ECoreType.Xray)
+                    fileName = V2rayFindexe(new List<string> { "xray" });
+                else if (coreType == ECoreType.v2fly)
+                    fileName = V2rayFindexe(new List<string> { "v2ray" });
+                else
+                    fileName = V2rayFindexe(new List<string> { "xray", "v2ray" });
+
                 if (fileName == "") return -1;
 
                 Process p = new Process
