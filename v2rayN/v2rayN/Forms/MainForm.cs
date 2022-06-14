@@ -21,6 +21,7 @@ namespace v2rayN.Forms
         private StatisticsHandler statistics = null;
         private List<VmessItem> lstVmess = null;
         private string groupId = string.Empty;
+        private string serverFilter = string.Empty;
 
         #region Window 事件
 
@@ -149,7 +150,7 @@ namespace v2rayN.Forms
 
         private void RestoreUI()
         {
-            scMain.Panel2Collapsed = true;
+            scServers.Panel2Collapsed = true;
 
             if (!config.uiItem.mainLocation.IsEmpty)
             {
@@ -211,7 +212,8 @@ namespace v2rayN.Forms
         private void RefreshServers()
         {
             lstVmess = config.vmess
-                .Where(it => Utils.IsNullOrEmpty(groupId) || (it.groupId == groupId))
+                .Where(it => Utils.IsNullOrEmpty(groupId) ? true : it.groupId == groupId)
+                .Where(it => Utils.IsNullOrEmpty(serverFilter) ? true : it.remarks.Contains(serverFilter))
                 .OrderBy(it => it.sort)
                 .ToList();
 
@@ -632,6 +634,9 @@ namespace v2rayN.Forms
                     case Keys.T:
                         menuSpeedServer_Click(null, null);
                         break;
+                    case Keys.F:
+                        menuServerFilter_Click(null, null);
+                        break;
                 }
             }
             else
@@ -721,6 +726,17 @@ namespace v2rayN.Forms
             SetDefaultServer(index);
         }
 
+        private void menuServerFilter_Click(object sender, EventArgs e)
+        {
+            var fm = new MsgFilterSetForm();
+            fm.MsgFilter = serverFilter;
+            if (fm.ShowDialog() == DialogResult.OK)
+            {
+                serverFilter = fm.MsgFilter;
+                gbServers.Text = string.Format(ResUI.MsgServerTitle, serverFilter);
+                RefreshServers();
+            }
+        }
 
         private void menuPingServer_Click(object sender, EventArgs e)
         {
@@ -1302,10 +1318,7 @@ namespace v2rayN.Forms
                     menuExit_Click(null, null);
                 }
             };
-            Task.Run(() =>
-            {
-                (new UpdateHandle()).CheckUpdateGuiN(config, _updateUI);
-            });
+            (new UpdateHandle()).CheckUpdateGuiN(config, _updateUI);
         }
 
         private void tsbCheckUpdateCore_Click(object sender, EventArgs e)
@@ -1338,10 +1351,7 @@ namespace v2rayN.Forms
                     AppendText(false, ResUI.MsgUpdateV2rayCoreSuccessfully);
                 }
             };
-            Task.Run(() =>
-            {
-                (new UpdateHandle()).CheckUpdateCore(type, config, _updateUI);
-            });
+            (new UpdateHandle()).CheckUpdateCore(type, config, _updateUI);
         }
 
         private void tsbCheckUpdateGeo_Click(object sender, EventArgs e)
@@ -1422,7 +1432,7 @@ namespace v2rayN.Forms
         private void tsbQRCodeSwitch_CheckedChanged(object sender, EventArgs e)
         {
             bool bShow = tsbQRCodeSwitch.Checked;
-            scMain.Panel2Collapsed = !bShow;
+            scServers.Panel2Collapsed = !bShow;
         }
         #endregion
 
@@ -1505,5 +1515,6 @@ namespace v2rayN.Forms
             }
         }
         #endregion
+
     }
 }

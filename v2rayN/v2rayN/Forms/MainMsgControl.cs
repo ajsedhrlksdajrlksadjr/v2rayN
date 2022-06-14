@@ -181,10 +181,9 @@ namespace v2rayN.Forms
         }
         private void menuMsgBoxFilter_Click(object sender, EventArgs e)
         {
-            var fm = new MsgFilterSetForm
-            {
-                MsgFilter = MsgFilter
-            };
+            var fm = new MsgFilterSetForm();
+            fm.MsgFilter = MsgFilter;
+            fm.ShowDefFilter = true;
             if (fm.ShowDialog() == DialogResult.OK)
             {
                 MsgFilter = fm.MsgFilter;

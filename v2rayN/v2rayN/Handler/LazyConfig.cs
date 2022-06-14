@@ -68,10 +68,20 @@ namespace v2rayN.Handler
             {
                 new CoreInfo
                 {
+                    coreType = ECoreType.v2rayN,
+                    coreUrl = Global.NUrl,
+                    coreLatestUrl = Global.NUrl + "/latest",
+                    coreDownloadUrl = Global.NUrl + "/download/{0}/v2rayN.zip",
+                },
+
+                new CoreInfo
+                {
                     coreType = ECoreType.v2fly,
                     coreExes = new List<string> { "wv2ray", "v2ray" },
                     arguments = "",
                     coreUrl = Global.v2flyCoreUrl,
+                    coreLatestUrl = Global.v2flyCoreUrl + "/latest",
+                    coreDownloadUrl = Global.v2flyCoreUrl + "/download/{0}/v2ray-windows-{1}.zip",
                     match = "V2Ray"
                 },
 
@@ -81,6 +91,8 @@ namespace v2rayN.Handler
                     coreExes = new List<string> { "xray" },
                     arguments = "",
                     coreUrl = Global.xrayCoreUrl,
+                    coreLatestUrl = Global.xrayCoreUrl + "/latest",
+                    coreDownloadUrl = Global.xrayCoreUrl + "/download/{0}/Xray-windows-{1}.zip",
                     match = "Xray"
                 },
 
@@ -91,7 +103,7 @@ namespace v2rayN.Handler
                     arguments = "-f config.json",
                     coreUrl = Global.clashCoreUrl
                 },
-
+                                                                                                                                         
                 new CoreInfo
                 {
                     coreType = ECoreType.clash_meta,
