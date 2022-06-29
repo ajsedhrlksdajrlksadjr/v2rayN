@@ -13,15 +13,15 @@ namespace v2rayN.Tool
     {
         public static void Setup()
         {
-            Hierarchy hierarchy = (Hierarchy)LogManager.GetRepository();
+            var hierarchy = (Hierarchy)LogManager.GetRepository();
 
-            PatternLayout patternLayout = new PatternLayout
+            var patternLayout = new PatternLayout
             {
                 ConversionPattern = "%date [%thread] %-5level %logger - %message%newline"
             };
             patternLayout.ActivateOptions();
 
-            RollingFileAppender roller = new RollingFileAppender
+            var roller = new RollingFileAppender
             {
                 AppendToFile = true,
                 RollingStyle = RollingFileAppender.RollingMode.Date,
@@ -33,7 +33,7 @@ namespace v2rayN.Tool
             roller.ActivateOptions();
             hierarchy.Root.AddAppender(roller);
 
-            MemoryAppender memory = new MemoryAppender();
+            var memory = new MemoryAppender();
             memory.ActivateOptions();
             hierarchy.Root.AddAppender(memory);
 

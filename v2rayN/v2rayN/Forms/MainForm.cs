@@ -18,8 +18,8 @@ namespace v2rayN.Forms
     {
         private V2rayHandler v2rayHandler;
         private List<VmessItem> lstSelecteds = new List<VmessItem>();
-        private StatisticsHandler statistics = null;
-        private List<VmessItem> lstVmess = null;
+        private StatisticsHandler statistics;
+        private List<VmessItem> lstVmess;
         private string groupId = string.Empty;
         private string serverFilter = string.Empty;
 
@@ -28,10 +28,10 @@ namespace v2rayN.Forms
         public MainForm()
         {
             InitializeComponent();
-            this.ShowInTaskbar = false;
-            this.WindowState = FormWindowState.Minimized;
+            ShowInTaskbar = false;
+            WindowState = FormWindowState.Minimized;
             HideForm();
-            this.Text = Utils.GetVersion();
+            Text = Utils.GetVersion();
             Global.processJob = new Job();
 
             Application.ApplicationExit += (sender, args) =>
@@ -154,12 +154,12 @@ namespace v2rayN.Forms
 
             if (!config.uiItem.mainLocation.IsEmpty)
             {
-                this.Location = config.uiItem.mainLocation;
+                Location = config.uiItem.mainLocation;
             }
             if (!config.uiItem.mainSize.IsEmpty)
             {
-                this.Width = config.uiItem.mainSize.Width;
-                this.Height = config.uiItem.mainSize.Height;
+                Width = config.uiItem.mainSize.Width;
+                Height = config.uiItem.mainSize.Height;
             }
 
 
@@ -172,9 +172,9 @@ namespace v2rayN.Forms
 
         private void StorageUI()
         {
-            config.uiItem.mainLocation = this.Location;
+            config.uiItem.mainLocation = Location;
 
-            config.uiItem.mainSize = new Size(this.Width, this.Height);
+            config.uiItem.mainSize = new Size(Width, Height);
 
             for (int k = 0; k < lvServers.Columns.Count; k++)
             {
@@ -187,7 +187,7 @@ namespace v2rayN.Forms
             switch (Utils.ToInt(e.Name))
             {
                 case (int)EGlobalHotkey.ShowForm:
-                    if (this.ShowInTaskbar) HideForm(); else ShowForm();
+                    if (ShowInTaskbar) HideForm(); else ShowForm();
                     break;
                 case (int)EGlobalHotkey.SystemProxyClear:
                     SetListenerType(ESysProxyType.ForcedClear);
@@ -212,8 +212,8 @@ namespace v2rayN.Forms
         private void RefreshServers()
         {
             lstVmess = config.vmess
-                .Where(it => Utils.IsNullOrEmpty(groupId) ? true : it.groupId == groupId)
-                .Where(it => Utils.IsNullOrEmpty(serverFilter) ? true : it.remarks.Contains(serverFilter))
+                .Where(it => Utils.IsNullOrEmpty(groupId) || it.groupId == groupId)
+                .Where(it => Utils.IsNullOrEmpty(serverFilter) || it.remarks.Contains(serverFilter))
                 .OrderBy(it => it.sort)
                 .ToList();
 
@@ -371,7 +371,7 @@ namespace v2rayN.Forms
                 {
                     ts.Checked = true;
                 }
-                ts.Click += new EventHandler(ts_Click);
+                ts.Click += ts_Click;
                 lst.Add(ts);
             }
             menuServers.DropDownItems.AddRange(lst.ToArray());
@@ -469,7 +469,7 @@ namespace v2rayN.Forms
                 {
                     Tag = item.id,
                 };
-                ts.Click += new EventHandler(ts_Group_Click);
+                ts.Click += ts_Group_Click;
                 lst.Add(ts);
             }
             menuMoveToGroup.DropDownItems.AddRange(lst.ToArray());
@@ -520,7 +520,7 @@ namespace v2rayN.Forms
         /// </summary>
         async Task LoadV2ray()
         {
-            this.BeginInvoke(new Action(() =>
+            BeginInvoke(new Action(() =>
             {
                 tsbReload.Enabled = false;
             }));
@@ -540,7 +540,7 @@ namespace v2rayN.Forms
 
             ChangePACButtonStatus(config.sysProxyType);
 
-            this.BeginInvoke(new Action(() =>
+            BeginInvoke(new Action(() =>
             {
                 tsbReload.Enabled = true;
             }));
@@ -636,6 +636,9 @@ namespace v2rayN.Forms
                         break;
                     case Keys.F:
                         menuServerFilter_Click(null, null);
+                        break;
+                    case Keys.E:
+                        menuSortServerResult_Click(null, null);
                         break;
                 }
             }
@@ -777,6 +780,10 @@ namespace v2rayN.Forms
             if (GetLvSelectedIndex() < 0) return;
             ClearTestResult();
             SpeedtestHandler statistics = new SpeedtestHandler(config, v2rayHandler, lstSelecteds, actionType, UpdateSpeedtestHandler);
+        }
+        private void menuSortServerResult_Click(object sender, EventArgs e)
+        {
+            lvServers_ColumnClick(null, new ColumnClickEventArgs((int)EServerColName.testResult));
         }
 
         private void tsbTestMe_Click(object sender, EventArgs e)
@@ -1089,8 +1096,8 @@ namespace v2rayN.Forms
 
         private void menuExit_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
-            this.Close();
+            Visible = false;
+            Close();
 
             Application.Exit();
         }
@@ -1098,13 +1105,13 @@ namespace v2rayN.Forms
 
         private void ShowForm()
         {
-            this.Show();
-            if (this.WindowState == FormWindowState.Minimized)
+            Show();
+            if (WindowState == FormWindowState.Minimized)
             {
-                this.WindowState = FormWindowState.Normal;
+                WindowState = FormWindowState.Normal;
             }
-            this.Activate();
-            this.ShowInTaskbar = true;
+            Activate();
+            ShowInTaskbar = true;
             //this.notifyIcon1.Visible = false;
             mainMsgControl.ScrollToCaret();
 
@@ -1121,10 +1128,10 @@ namespace v2rayN.Forms
         private void HideForm()
         {
             //this.WindowState = FormWindowState.Minimized;
-            this.Hide();
+            Hide();
             //this.notifyMain.Icon = this.Icon;
-            this.notifyMain.Visible = true;
-            this.ShowInTaskbar = false;
+            notifyMain.Visible = true;
+            ShowInTaskbar = false;
 
             SetVisibleCore(false);
         }
@@ -1297,9 +1304,9 @@ namespace v2rayN.Forms
 
             mainMsgControl.DisplayToolStatus(config);
 
-            this.BeginInvoke(new Action(() =>
+            BeginInvoke(new Action(() =>
             {
-                notifyMain.Icon = this.Icon = MainFormHandler.Instance.GetNotifyIcon(config, this.Icon);
+                notifyMain.Icon = Icon = MainFormHandler.Instance.GetNotifyIcon(config, Icon);
             }));
         }
 
@@ -1329,6 +1336,16 @@ namespace v2rayN.Forms
         private void tsbCheckUpdateXrayCore_Click(object sender, EventArgs e)
         {
             CheckUpdateCore(ECoreType.Xray);
+        }
+
+        private void tsbCheckUpdateClashCore_Click(object sender, EventArgs e)
+        {
+            CheckUpdateCore(ECoreType.clash);
+        }
+
+        private void tsbCheckUpdateClashMetaCore_Click(object sender, EventArgs e)
+        {
+            CheckUpdateCore(ECoreType.clash_meta);
         }
 
         private void CheckUpdateCore(ECoreType type)
@@ -1491,7 +1508,7 @@ namespace v2rayN.Forms
                     ts.Checked = true;
                     mainMsgControl.SetToolSslInfo("routing", item.remarks);
                 }
-                ts.Click += new EventHandler(ts_Routing_Click);
+                ts.Click += ts_Routing_Click;
                 lst.Add(ts);
             }
             menuRoutings.DropDownItems.AddRange(lst.ToArray());

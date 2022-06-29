@@ -48,14 +48,7 @@ namespace v2rayN.Forms
             txtRemarks.Text = vmessItem.remarks;
             txtAddress.Text = vmessItem.address;
 
-            if (vmessItem.coreType == null)
-            {
-                cmbCoreType.Text = string.Empty;
-            }
-            else
-            {
-                cmbCoreType.Text = vmessItem.coreType.ToString();
-            }
+            cmbCoreType.Text = vmessItem.coreType == null ? string.Empty : vmessItem.coreType.ToString();
         }
 
 
@@ -92,7 +85,7 @@ namespace v2rayN.Forms
 
             if (ConfigHandler.EditCustomServer(ref config, vmessItem) == 0)
             {
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
             }
             else
             {
@@ -102,14 +95,7 @@ namespace v2rayN.Forms
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            if (Utils.IsNullOrEmpty(vmessItem.indexId))
-            {
-                this.DialogResult = DialogResult.Cancel;
-            }
-            else
-            {
-                this.DialogResult = DialogResult.OK;
-            }
+            DialogResult = Utils.IsNullOrEmpty(vmessItem.indexId) ? DialogResult.Cancel : DialogResult.OK;
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
